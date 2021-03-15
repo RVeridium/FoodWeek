@@ -1,8 +1,18 @@
 # Basic food week application
 
-Incomplete
+*Incomplete*
 
 Project initialised with Expo, using Google Firebase, react-native-elements, @react-native-picker/picker and @react-navigation/drawer. 
+
+The database instance lives in the gitignored config.js file, that exports the initialised {db}
+
+```javascript
+let app = (!firebase.apps.length) ? firebase.initializeApp(firebaseConfig): null; 
+
+export const db = app.database(); 
+```
+
+
 
 ## Basic functions
 

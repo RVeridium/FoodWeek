@@ -11,7 +11,8 @@ export default function NewWeek({navigation}) {
   const [weekN, setWeekN] = useState(''); 
   const [list, setList] = useState([]); 
   const [fullday, setFullday] = useState({'breakfast': '', 'lunch': '', 'dinner': '' }); 
-  const [fullweek, setFullweek] = useState({}); 
+  const [fullweek, setFullweek] = useState({'monday': '', 'tuesday': '', 'wednesday': '',
+   'thursday': '', 'friday': '', 'saturday': '', 'sunday': ''}); 
 
 
   useEffect(() => {
@@ -81,6 +82,7 @@ export default function NewWeek({navigation}) {
   }
 
   const saveAll = () => {
+
     const reff = db.ref('/week/').push(); 
     reff.set({
       'week': weekN, 
@@ -89,7 +91,9 @@ export default function NewWeek({navigation}) {
     .catch(function(error) { Alert.alert('Something went wrong'); }) 
     setFullweek({}); 
     setWeekN(''); 
-  }; 
+    
+  };
+
 
     return (
       <View style={{flex: 1}}>
@@ -111,37 +115,37 @@ export default function NewWeek({navigation}) {
          <Card>
            <Card.Title>Monday</Card.Title>
            <Card.Divider/>
-           <CardCont id={0}/>
+           <CardCont id={'monday'}/>
          </Card>
          <Card>
            <Card.Title>Tuesday</Card.Title>
            <Card.Divider/>
-           <CardCont id={1}/>
+           <CardCont id={'tuesday'}/>
          </Card>
          <Card>
            <Card.Title>Wednesday</Card.Title>
            <Card.Divider/>
-           <CardCont id={2}/>
+           <CardCont id={'wednesday'}/>
          </Card>
          <Card>
            <Card.Title>Thursday</Card.Title>
            <Card.Divider/>
-           <CardCont id={3}/>
+           <CardCont id={'thursday'}/>
          </Card>
          <Card>
            <Card.Title>Friday</Card.Title>
            <Card.Divider/>
-           <CardCont id={4}/>
+           <CardCont id={'friday'}/>
          </Card>
          <Card>
            <Card.Title>Saturday</Card.Title>
            <Card.Divider/>
-           <CardCont id={5}/>
+           <CardCont id={'saturday'}/>
          </Card>
          <Card>
            <Card.Title>Sunday</Card.Title>
            <Card.Divider/>
-           <CardCont id={6}/>
+           <CardCont id={'sunday'}/>
          </Card>
          <Button
          title='Save all'

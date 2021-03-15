@@ -7,9 +7,9 @@ import { Alert } from 'react-native';
 import { Pressable } from 'react-native';
 
 export default function Week({navigation}) {
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const [list, setList] = useState([]); 
-  const [menu, setMenu] = useState([]); 
+  const [menu, setMenu] = useState({}); 
 ///to be fixed
   useEffect(() => {
     db.ref('/week').on('value', snapshot => {
@@ -23,19 +23,15 @@ export default function Week({navigation}) {
     })
   }, []); 
 
-  const testCase = (key) => { 
-      Alert.alert('You selected: ' + key); 
-      let search = key 
+  const testCase = ({item}) => { 
+      Alert.alert('You selected: ' + item.value); 
+      let search = item.key; 
       db.ref('/week/'+search).on('value', snapshot => {
-        let out = snapshot.val();
-        let fix = []; 
-        out.menu.forEach(({item, index}) => (
-          (!item===undefined)?
-          fix.push(item) : null
-        )
-      )
-        setMenu(fix)
-        console.log(menu); 
+       const info = snapshot.val(); 
+       const menu = info.menu; 
+       console.log('manu on'); 
+       console.log(menu);
+       setMenu(menu); 
       })
   }
 
@@ -46,12 +42,29 @@ export default function Week({navigation}) {
       let name = full.name; 
       return (name)
     })
-   
+  }
+
+  //nimihakufunctio kuntoonn. tästä ei saada siistiä. 
+
+  const CardSize = () => {
+    return(
+      
+    (menu.hasOwnProperty('monday'))? 
+    <Card>
+    <Card.Title>Monday</Card.Title>
+    <Card.Divider/>
+    <Text>Breakfast:  {menu.monday.breakfast} </Text>
+    <Text>Lunch:  {menu.monday.lunch} </Text>
+    <Text>Dinner:  {menu.monday.dinner} </Text>
+    </Card>: null
+      
+    )
+
   }
 
   const renderItem = ({ item }) => {
     return (
-      <Pressable onPress={() => testCase(item.key)}>
+      <Pressable onPress={() => testCase({item})}>
         <View style={{borderWidth: 1, borderColor: 'black', paddingHorizontal: 5, marginHorizontal: 5}}>
       <Text style={{fontSize: 20}}>{item.value}</Text>
       </View>
@@ -59,19 +72,7 @@ export default function Week({navigation}) {
     )
   };
 
-  const CardLife = () => {
-    return(
-      menu.map(({item, index}) => (
-        <Card key={index}>
-          <Card.Title>{days[index]}</Card.Title>
-          <Card.Divider/>
-          <Text>Breakfast: </Text>
-          <Text>Lunch: {item.lunch}</Text>
-          <Text>Dinner: {item.dinner}</Text>
-        </Card>
-      ))
-      )
-  }
+ 
 
     return (
         <View style={{flex: 1}}>
@@ -92,19 +93,18 @@ export default function Week({navigation}) {
             horizontal={true}
             />
             </View>
-             {(menu.length>0)? 
-             menu.map((item, index) => 
-             <Card>
-               <Card.Title>{days[index]}</Card.Title>
-               <Card.Divider/>
-               <Text>Breakfast: {item.breakfast}</Text>
-               <Text>Lunch: {item.lunch}</Text>
-               <Text>Dinner: {item.dinner}</Text>
-             </Card>
-           )
-             : 
-             <Text style={{justifyContent: 'center', alignContent: 'center'}}>No cards here</Text>
-             }
+            <Card>
+              <Card.Title>You test forever</Card.Title>
+            </Card>
+            {(Object.keys(menu).length===0)? 
+            <Text>Please select a week</Text>
+            : 
+            <View>
+            <Text>Menu card here</Text>
+            <CardSize/>
+            </View>
+            }
+            
              </ScrollView>
         </View>
     )
@@ -135,4 +135,33 @@ const styles = StyleSheet.create({
                 <Text>Dinner: {item.dinner}</Text>
               </Card>
             )
+
+
+             const CardLife = () => {
+    return(
+      menu.map(({item, index}) => (
+        <Card key={index}>
+          <Card.Title>{days[index]}</Card.Title>
+          <Card.Divider/>
+          <Text>Breakfast: </Text>
+          <Text>Lunch: {item.lunch}</Text>
+          <Text>Dinner: {item.dinner}</Text>
+        </Card>
+      ))
+      )
+  }
+
+   {(menu.length>0)? 
+             menu.map((item, index) => 
+             <Card>
+               <Card.Title>{days[index]}</Card.Title>
+               <Card.Divider/>
+               <Text>Breakfast: {item.breakfast}</Text>
+               <Text>Lunch: {item.lunch}</Text>
+               <Text>Dinner: {item.dinner}</Text>
+             </Card>
+           )
+             : 
+             <Text style={{justifyContent: 'center', alignContent: 'center'}}>No cards here</Text>
+             }
    */
