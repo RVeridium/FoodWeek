@@ -17,6 +17,8 @@ export default function SingleRes({route, navigation}) {
         .then(snapshot => {
             const out = snapshot.val(); 
             setRecipe({...recipe, name: out.name, instructions: out.instructions, ingredients: out.ingredients})
+        }).catch(function(error) {
+          console.log(error); 
         })
     },[key])
 
@@ -34,6 +36,7 @@ export default function SingleRes({route, navigation}) {
         </ListItem.Content>
       </ListItem>
       )
+
     return (
         <View style={styles.container}>
             <Header
@@ -74,16 +77,3 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff', 
     }
   });
-
-  /**
-   * <FlatList
-           data={allIng}
-           renderItem={renderItem}
-           keyExtractor={(item, index) => index.toString()}
-           style={{flex: 1}}
-        />
-   * <View>
-            <Text>Please select a recipe from the list first</Text>
-            </View>
-   * 
-   */

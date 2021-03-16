@@ -7,7 +7,6 @@ import {db} from './config';
 
 
 export default function NewWeek({navigation}) {
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   const [weekN, setWeekN] = useState(''); 
   const [list, setList] = useState([]); 
   const [fullday, setFullday] = useState({'breakfast': '', 'lunch': '', 'dinner': '' }); 
@@ -175,19 +174,3 @@ const styles = StyleSheet.create({
       fontSize: 20
     }
   });
-
-  /**
-   * 
-   * <Input
-        placeholder='Dinner'
-        value={fullday.dinner}
-        onChangeText={value => setFullday({...fullday, 'dinner': value})}
-        />
-
-        const reff = db.ref('/week/').push(); 
-    reff.set({
-      'week': weekN, 
-      'menu': fullweek
-    }).then(function () {Alert.alert('Menu succesful'); })
-    .catch(function(error) { Alert.alert(error); }) 
-   */

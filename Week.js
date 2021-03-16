@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
-import {Button, Card, Header, Input} from 'react-native-elements'; 
-import {Picker} from '@react-native-picker/picker'; 
+import {Button, Card, Header, Input} from 'react-native-elements';  
 import {db} from './config'; 
 import { Alert } from 'react-native';
 import { Pressable } from 'react-native';
 
 export default function Week({navigation}) {
-  const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
   const [list, setList] = useState([]); 
   const [menu, setMenu] = useState({}); 
-///to be fixed
+
   useEffect(() => {
     db.ref('/week').on('value', snapshot => {
       const info = snapshot.val(); 
@@ -29,38 +27,158 @@ export default function Week({navigation}) {
       db.ref('/week/'+search).on('value', snapshot => {
        const info = snapshot.val(); 
        const menu = info.menu; 
-       console.log('manu on'); 
-       console.log(menu);
        setMenu(menu); 
       })
   }
 
-  const GetName = (key) => {
-    db.ref('/recipe' + key).once('value')
-    .then(function(snapshot) {
-      let full = snapshot.val(); 
-      let name = full.name; 
-      return (name)
-    })
-  }
-
-  //nimihakufunctio kuntoonn. tästä ei saada siistiä. 
-
-  const CardSize = () => {
+  const Monday = () => {
     return(
-      
-    (menu.hasOwnProperty('monday'))? 
+    (menu.monday.toString().length>0)? 
     <Card>
     <Card.Title>Monday</Card.Title>
     <Card.Divider/>
-    <Text>Breakfast:  {menu.monday.breakfast} </Text>
-    <Text>Lunch:  {menu.monday.lunch} </Text>
-    <Text>Dinner:  {menu.monday.dinner} </Text>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.monday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.monday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.monday.dinner]})}/>
+    </View>
     </Card>: null
-      
     )
-
   }
+  const Tuesday = () => {
+    return(
+    (menu.tuesday.toString().length>0)? 
+    <Card>
+    <Card.Title>Tuesday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.tuesday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.tuesday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.tuesday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  const Wednesday = () => {
+    return(
+    (menu.wednesday.toString().length>0)? 
+    <Card>
+    <Card.Title>Wednesday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.wednesday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.wednesday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.wednesday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  const Thursday = () => {
+    return(
+    (menu.thursday.toString().length>0)? 
+    <Card>
+    <Card.Title>Thursday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.thursday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.thursday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.thursday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  const Friday = () => {
+    return(
+    (menu.friday.toString().length>0)? 
+    <Card>
+    <Card.Title>Friday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.friday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.friday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.friday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  const Saturday = () => {
+    return(
+    (menu.saturday.toString().length>0)? 
+    <Card>
+    <Card.Title>Saturday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.saturday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.saturday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.saturday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  const Sunday = () => {
+    return(
+    (menu.hasOwnProperty('sunday') && menu.sunday.toString().length>0)? 
+    <Card>
+    <Card.Title>Sunday</Card.Title>
+    <Card.Divider/>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Breakfast:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.sunday.breakfast]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Lunch:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.sunday.lunch]})}/>
+    </View>
+    <View style={styles.row}>
+    <Text style={{fontSize: 23}}>Dinner:</Text> 
+    <Button style={styles.button} title='Check' onPress={() => navigation.navigate('Current recipe', {key: [menu.sunday.dinner]})}/>
+    </View>
+    </Card>: null
+    )
+  }
+  
 
   const renderItem = ({ item }) => {
     return (
@@ -93,15 +211,17 @@ export default function Week({navigation}) {
             horizontal={true}
             />
             </View>
-            <Card>
-              <Card.Title>You test forever</Card.Title>
-            </Card>
             {(Object.keys(menu).length===0)? 
-            <Text>Please select a week</Text>
+            <Text style={{textAlign: 'center', paddingTop: 10, fontSize: 20}}>Please select a week</Text>
             : 
             <View>
-            <Text>Menu card here</Text>
-            <CardSize/>
+            <Monday/>
+            <Tuesday/>
+            <Wednesday/>
+            <Thursday/>
+            <Friday/>
+            <Saturday/>
+            <Sunday/>
             </View>
             }
             
@@ -121,47 +241,15 @@ const styles = StyleSheet.create({
       flex: 1, 
       flexDirection: 'row', 
       flexWrap: 'wrap'
-    }
+    }, 
+    button: {
+      width: 100
+    }, 
+    row: {
+      flexDirection: 'row', 
+      justifyContent: 'space-between', 
+      paddingBottom: 5
+    }, 
+
+
   });
-
-  /**
-   * 
-   * menu.map((item, index) => 
-              <Card>
-                <Card.Title>{days[index]}</Card.Title>
-                <Card.Divider/>
-                <Text>Breakfast: {item.breakfast}</Text>
-                <Text>Lunch: {item.lunch}</Text>
-                <Text>Dinner: {item.dinner}</Text>
-              </Card>
-            )
-
-
-             const CardLife = () => {
-    return(
-      menu.map(({item, index}) => (
-        <Card key={index}>
-          <Card.Title>{days[index]}</Card.Title>
-          <Card.Divider/>
-          <Text>Breakfast: </Text>
-          <Text>Lunch: {item.lunch}</Text>
-          <Text>Dinner: {item.dinner}</Text>
-        </Card>
-      ))
-      )
-  }
-
-   {(menu.length>0)? 
-             menu.map((item, index) => 
-             <Card>
-               <Card.Title>{days[index]}</Card.Title>
-               <Card.Divider/>
-               <Text>Breakfast: {item.breakfast}</Text>
-               <Text>Lunch: {item.lunch}</Text>
-               <Text>Dinner: {item.dinner}</Text>
-             </Card>
-           )
-             : 
-             <Text style={{justifyContent: 'center', alignContent: 'center'}}>No cards here</Text>
-             }
-   */
