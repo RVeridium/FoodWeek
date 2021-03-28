@@ -16,7 +16,7 @@ export const db = app.database();
 
 ## Basic functions
 
-The app saves recipes to a Firebase Realtime db, from where the user can then select a single recipe to view, or alternatively, create and then view a full week menu for the family in one go (using an Elements Cards component).
+The app saves recipes to a Firebase Realtime db, from where the user can then select a single recipe to view, or alternatively, create and then view a full week menu for the family in one go (using an Elements Cards component). The create week menu functionality implements a horizontal flatlist and react-native-collapsible, as performance issues were detected using react-native-picker. 
 
 ## Functions that didn't make it. 
 

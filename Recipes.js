@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Constants from 'expo-constants'
-import {db} from './config'; 
-import {Button, ListItem, Header} from 'react-native-elements'; 
+import {db} from './config';
+import {Button, ListItem, Header, Icon} from 'react-native-elements';
 
 
 export default function Recipes({navigation, route}) {
@@ -31,7 +31,7 @@ export default function Recipes({navigation, route}) {
     <ListItem.Content>
       <ListItem.Title>{item.value.name}</ListItem.Title>
     </ListItem.Content>
-    <ListItem.Chevron onPress={() => navigation.navigate('Current recipe', {key: item.key})}/>
+    <ListItem.Chevron onPress={() => navigation.navigate('Recipe', {key: item.value})}/>
     </ListItem>
 
     )
@@ -52,6 +52,7 @@ export default function Recipes({navigation, route}) {
         text: "ALL RECIPES",
         style: { color: "#fff" }
       }}
+      rightComponent={<Icon name='menu' type='entypo' color= '#fff' size={27} onPress={() => navigation.openDrawer()}/>}
       />
     </View>
           {(list.length>0)? 
@@ -72,6 +73,9 @@ export default function Recipes({navigation, route}) {
 
     )
 }
+
+
+
 const styles = StyleSheet.create({
     container: {
       //paddingTop: Constants.statusBarHeight,
@@ -86,47 +90,3 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff', 
     }
   });
-
-  /**
-   * keyExtractor={(item) => item.toString()}
-   * snapshot.forEach(function (childSnapshot) {
-        var item = {key: childSnapshot.key, value: childSnapshot.val()}
-
-        //var item = childSnapshot.val(); 
-        //item.key = childSnapshot.key; 
-        setList([...list, item]); 
-      })
-
-
-       db.ref('/recipes').on('value', snapshot => {
-     const info = snapshot.val(); 
-      console.log(info);
-      console.log('ja out')
-     // console.log(Object.keys(info)); 
-     // console.log(Object.entries(info)); 
-
-      const out = Object.values(info); 
-      console.log(out)
-      setList(out); 
-    }, function (errorObject) {
-      console.log(errorObject)
-    });
-
-    db.ref('/recipes').once('value').then(snapshot => {
-      snapshot.forEach(function(childSnapshot) {
-        var item = childSnapshot.val(); 
-        item.key = childSnapshot.key; 
-        //liist.push(item); 
-        setList([...list, item]);
-
-      })
-      //setList(liist); 
-      
-    }, function (errorObject) {
-      console.log(errorObject)
-    });
-
-
-
-   * 
-   */

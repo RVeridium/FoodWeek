@@ -1,27 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { useState } from 'react';
-import Constants from 'expo-constants'
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import {Button, Input, ListItem, Header} from 'react-native-elements'; 
-import {db} from './config'; 
+import {ListItem, Header} from 'react-native-elements'; 
 
 export default function SingleRes({route, navigation}) {
-    const key = route.params; 
-    const [recipe, setRecipe] = useState({name: '', instructions: '', ingredients: []}); 
-
-
-    useEffect(() => {
-      console.log(key.key); 
-        db.ref('/recipes/'+ key.key).once('value')
-        .then(snapshot => {
-            const out = snapshot.val(); 
-            setRecipe({...recipe, name: out.name, instructions: out.instructions, ingredients: out.ingredients})
-        }).catch(function(error) {
-          console.log(error); 
-        })
-    },[key])
-
+    const {key} = route.params; 
 
         const Leftie = () => {
             return (
@@ -48,16 +31,16 @@ export default function SingleRes({route, navigation}) {
       leftComponent={<Leftie/>} 
       />
             <Text style={{paddingTop: 10, fontSize: 20, textAlign: 'center'}}>
-                {recipe.name}
+                {key.name}
             </Text>
             <FlatList
-           data={recipe.ingredients}
+           data={key.ingredients}
            renderItem={renderItem}
            keyExtractor={(item, index) => index.toString()}
            style={{flex: 1, width: 200}}
            />
             <Text style={{ fontSize: 18, flex: 1}}>
-                {recipe.instructions}
+                {key.instructions}
             </Text>
         </View>
     )

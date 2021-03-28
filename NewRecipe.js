@@ -1,21 +1,21 @@
 import React from 'react';
 import { useState } from 'react';
 import Constants from 'expo-constants'
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import {Button, Input, ListItem, Header} from 'react-native-elements'; 
+import { StyleSheet, Text, View, FlatList, ScrollView, Keyboard } from 'react-native';
+import {Button, Input, ListItem, Header, Icon, ButtonGroup} from 'react-native-elements'; 
 import {db} from './config'; 
+import {Picker} from '@react-native-picker/picker'; 
 
 
 
 
 export default function NewRecipe({navigation}) {
-  //const [recipe, setRecipe] = useState({nameR: '', instructions:''});
   const [instruct, setInstuct] = useState(''); 
   const [recName, setRecName] = useState(''); 
   const [allIng, setAllIng] = useState([]);
   const [ing, setIng] = useState({nameI: '', unit: '', amount: ''}); 
 
-  //const db = Firebase.database(); 
+  const units = ['tl', 'rl', 'dl', 'l', 'g', 'kg']; 
 
 
   const saveRecipe = () => {
@@ -41,7 +41,6 @@ export default function NewRecipe({navigation}) {
   </ListItem>
   )
 
-
   
 
 
@@ -54,6 +53,7 @@ export default function NewRecipe({navigation}) {
         text: "ADD RECIPE",
         style: { color: "#fff" }
       }}
+      rightComponent={<Icon name='menu' type='entypo' color= '#fff' size={27} onPress={() => navigation.openDrawer()}/>}
       />
     
           <View>
@@ -63,24 +63,29 @@ export default function NewRecipe({navigation}) {
             value={recName}
             />
            </View> 
-           <Text style={{paddingLeft: 5}}>Add ingredients</Text>
+           <Text style={{textAlign: 'center', marginBottom: 5, fontSize: 20}}>Add ingredients</Text>
            <View style={styles.ings}>
-             <View style={styles.child}>
+             <View style={{width: 100}}>
              <Input 
-              
               placeholder='Amount'
               name='amount'
               value={ing.amount}
               onChangeText={value => setIng({...ing, amount: value})}
+              keyboardType='numeric'
               />
               </View>
-              <View style={styles.child}>
-              <Input 
-             
-              placeholder='Unit'
-              value={ing.unit}
-              onChangeText={value => setIng({...ing, unit: value})}
-              />
+              <View>
+                <Picker
+                style={[styles.onePicker]}
+                itemStyle={styles.onePickerItem}
+                selectedValue={ing.unit}
+                onValueChange={(itemValue, itemIndex) => 
+                  setIng({...ing, unit: itemValue})
+                }>
+                {units.map((item, index) => {
+                return(<Picker.Item label={item} value={item} key={index}/>)
+              })}
+                </Picker>
               </View>
               <View style={styles.child}>
               <Input 
@@ -95,9 +100,10 @@ export default function NewRecipe({navigation}) {
               icon={{
                 name: 'plus-one', 
                 size: 15, 
-                color: 'black'
+                color: 'white'
               }}
-              onPress={() => saveIng()}/>
+              onPress={() => saveIng()}
+              style={{marginRight: 5}}/>
            </View>
            <View>
              <Input
@@ -106,6 +112,7 @@ export default function NewRecipe({navigation}) {
              onChangeText={value => setInstuct(value)}
              value={instruct}
              multiline={true}
+             onEndEditing={Keyboard.dismiss}
              />
            </View>
            <Button
@@ -138,9 +145,8 @@ const styles = StyleSheet.create({
     },
     ings: {
       flexDirection: 'row',
-      justifyContent: 'center',
+      justifyContent: 'space-evenly',
       alignItems: 'center'
-
     },
     box: {
       borderWidth: 1, 
@@ -149,7 +155,20 @@ const styles = StyleSheet.create({
       width: 200
     }, 
     child: {
-      width: 90
+      width: 150
+    }, 
+    topdown: {
+      //flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }, 
+    onePicker: {
+      height: 44,
+      width: 60 
+    }, 
+    onePickerItem: {
+      height: 44
+      //does not apply to android?????
     }
   });
 
